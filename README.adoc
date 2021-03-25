@@ -1,6 +1,10 @@
 # Development-IaC
 
 == Summary
+(Note that this needs to be further updated for Deloitte specific information)
+
+This is a fork of the repository at https://github.com/CodeSparta/devkit-vpc
+
 This terraform play is designed to create a working development VPC for the user. It will create the following resources:
 
 - Three Public subnets

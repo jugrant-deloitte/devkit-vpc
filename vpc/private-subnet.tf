@@ -6,7 +6,7 @@ id =    aws_subnet.pri_subnet[count.index].id
 
 resource "aws_subnet" "pri_subnet" {
   count                   =  length(var.aws_azs)
-  vpc_id                  =  aws_vpc.cluster_vpc.id
+  vpc_id                  =  var.vpc_id
   cidr_block              =  element(var.vpc_private_subnet_cidrs, count.index)
   availability_zone       =  format("%s%s", element(list(var.aws_region), count.index), element(var.aws_azs, count.index))
 
@@ -20,7 +20,7 @@ resource "aws_subnet" "pri_subnet" {
 }
 
 resource "aws_route_table" "pri_route_table" {
-  vpc_id =  aws_vpc.cluster_vpc.id
+  vpc_id =  var.vpc_id
   tags =  merge(
   var.default_tags,
   map(

@@ -8,4 +8,5 @@ variable "vpc_public_subnet_cidrs" { default = [""] }
 variable "aws_access_key" { default = ""}
 variable "aws_secret_key" { default = ""}
 variable "vpc_id" {default = ""}
-variable "vpc_cidr" {default = "" }
+variable "private_vpc_cidr_blocks" {default = "" }
+variable "public_vpc_cidr_blocks" {default = "" }

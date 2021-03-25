@@ -1,6 +1,6 @@
 resource "aws_security_group" "registry-sg" {
   name =  "${var.cluster_name}-registry-sg"
-  vpc_id =  data.aws_vpc.cluster_vpc.id
+  vpc_id =  var.vpc_id
 
   tags =  merge(
   var.default_tags,
@@ -14,7 +14,7 @@ map(
 resource "aws_security_group_rule" "registry_ingress_8080" {
   security_group_id = aws_security_group.registry-sg.id
   type        = "ingress"
-  cidr_blocks = [var.cidr_blocks]
+  cidr_blocks = [var.public_vpc_cidr_blocks, var.private_vpc_cidr_blocks]
   protocol    = "tcp"
   from_port   = 8080
   to_port     = 8080
@@ -22,29 +22,29 @@ resource "aws_security_group_rule" "registry_ingress_8080" {
 
 resource "aws_security_group_rule" "registry_ingress_5000" {
   security_group_id = aws_security_group.registry-sg.id
-  type 		= "ingress"
-  cidr_blocks 	= [var.cidr_blocks]
-  protocol 	= "tcp"
-  from_port	= 5000
-  to_port   	= 5000
+  type    = "ingress"
+  cidr_blocks   = [var.public_vpc_cidr_blocks, var.private_vpc_cidr_blocks]
+  protocol  = "tcp"
+  from_port = 5000
+  to_port     = 5000
 }
 
 resource "aws_security_group_rule" "registry_ingress_22" {
   security_group_id = aws_security_group.registry-sg.id
-  type  	= "ingress"
-  cidr_blocks 	= [var.cidr_blocks]
-  protocol	= "tcp"
-  from_port	= 22
-  to_port	= 22
+  type    = "ingress"
+  cidr_blocks   = [var.public_vpc_cidr_blocks, var.private_vpc_cidr_blocks]
+  protocol  = "tcp"
+  from_port = 22
+  to_port = 22
 }
 
 resource "aws_security_group_rule" "coredns_ingress_53" {
   security_group_id = aws_security_group.registry-sg.id
-  type  	= "ingress"
-  cidr_blocks 	= [var.cidr_blocks]
-  protocol	= "udp"
-  from_port	= 53
-  to_port	= 53
+  type    = "ingress"
+  cidr_blocks   = [var.public_vpc_cidr_blocks, var.private_vpc_cidr_blocks]
+  protocol  = "udp"
+  from_port = 53
+  to_port = 53
 }
 
 resource "aws_security_group_rule" "registry_egress_all" {

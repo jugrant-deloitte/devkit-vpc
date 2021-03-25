@@ -1,7 +1,7 @@
 resource "aws_route53_zone" "private_zone" {
   name =  "${var.cluster_name}.${var.cluster_domain}"
   vpc {
-    vpc_id =  data.aws_vpc.cluster_vpc.id
+    vpc_id =  var.vpc_id
   }
   force_destroy = "true"
 

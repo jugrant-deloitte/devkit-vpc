@@ -1,12 +1,31 @@
 provider "aws" {
   region = var.aws_region
+  access_key = var.aws_access_key
+  secret_key = var.aws_secret_key
+  ignore_tags {
+    keys = [
+      "BILLINGCODE",
+      "BILLINGCONTACT",
+      "CLIENT",
+      "COUNTRY",
+      "CSCLASS",
+      "CSQUAL",
+      "CSTYPE",
+      "ENVIRONMENT",
+      "FUNCTION",
+      "GROUPCONTACT",
+      "MEMBERFIRM",
+      "PRIMARYCONTACT",
+      "SECONDARYCONTACT"
+    ]
+  }
 }
 
 module "vpc" {
   source = "./vpc"
 
+  vpc_id = var.vpc_id
   cluster_name = var.cluster_name
-  cidr_blocks = var.cidr_blocks
   aws_region = var.aws_region
   default_tags = var.default_tags
   aws_azs = var.aws_azs
@@ -17,11 +36,12 @@ module "vpc" {
 module "security-groups" {
   source = "./security-groups"
 
-  vpc_id = module.vpc.vpc_id
+  vpc_id = var.vpc_id
   cluster_name = var.cluster_name
   aws_region = var.aws_region
   default_tags = var.default_tags
-  cidr_blocks = var.cidr_blocks
+  public_vpc_cidr_blocks = var.public_vpc_cidr_blocks
+  private_vpc_cidr_blocks = var.private_vpc_cidr_blocks
 }
 
 module "iam-roles" {
@@ -35,7 +55,7 @@ module "iam-roles" {
 module "route-53" {
   source = "./route-53"
 
-  vpc_id = module.vpc.vpc_id
+  vpc_id = var.vpc_id
   cluster_name = var.cluster_name
   cluster_domain = var.cluster_domain
   aws_region = var.aws_region
@@ -46,7 +66,7 @@ module "route-53" {
 module "bastion-node" {
   source = "./bastion-node"
 
-  vpc_id = module.vpc.vpc_id
+  vpc_id = var.vpc_id
   cluster_name = var.cluster_name
   aws_region = var.aws_region
   default_tags = var.default_tags
@@ -62,7 +82,7 @@ module "registry-node" {
   source = "./registry-node"
   depends_on = [module.route-53]
 
-  vpc_id = module.vpc.vpc_id
+  vpc_id = var.vpc_id
   registry_sg_ids = [module.security-groups.registry_sg_id]
   cluster_name = var.cluster_name
   cluster_domain = var.cluster_domain

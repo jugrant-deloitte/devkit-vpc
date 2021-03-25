@@ -8,7 +8,7 @@ This is a fork of the repository at https://github.com/CodeSparta/devkit-vpc
 This terraform play is designed to create a working development VPC for the user. It will create the following resources:
 
 - Three Public subnets
-- Three Private subnets "no nat to simulate airgapped"
+- Three Private subnets "no nat to simulate airgapped" (this needs to be fixed in Deloitte environment)
 - s3 vpc_endpoint
 - ec2 vpc_endpoint
 - elb vpc_endpoint

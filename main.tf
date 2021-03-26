@@ -30,7 +30,9 @@ module "vpc" {
   default_tags = var.default_tags
   aws_azs = var.aws_azs
   vpc_private_subnet_cidrs = var.vpc_private_subnet_cidrs
-  vpc_public_subnet_cidrs = var.vpc_public_subnet_cidrs
+  public_vpc_cidr_block = var.public_vpc_cidr_block
+  private_vpc_cidr_block = var.private_vpc_cidr_block
+  deloitte_subnet_cidr_block = var.deloitte_subnet_cidr_block
 }
 
 module "security-groups" {
@@ -40,8 +42,11 @@ module "security-groups" {
   cluster_name = var.cluster_name
   aws_region = var.aws_region
   default_tags = var.default_tags
-  public_vpc_cidr_blocks = var.public_vpc_cidr_blocks
-  private_vpc_cidr_blocks = var.private_vpc_cidr_blocks
+  vpc_public_subnet_cidrs = var.vpc_public_subnet_cidrs
+  vpc_private_subnet_cidrs = var.vpc_private_subnet_cidrs
+  public_vpc_cidr_block = var.public_vpc_cidr_block
+  private_vpc_cidr_block = var.private_vpc_cidr_block
+  deloitte_subnet_cidr_block = var.deloitte_subnet_cidr_block
 }
 
 module "iam-roles" {

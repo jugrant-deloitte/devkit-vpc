@@ -1,6 +1,6 @@
 data "aws_subnet" "private" {
   count = length(var.aws_azs)
-id =    aws_subnet.pri_subnet[count.index].id
+  id =    aws_subnet.pri_subnet[count.index].id
 }
 
 

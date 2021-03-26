@@ -23,6 +23,11 @@ resource "aws_instance" "bastion-node" {
   instance_type = var.bastion_type
   subnet_id     = local.instance_subnet_id
   key_name      = var.aws_ssh_key
+  disable_api_termination = false
+  ebs_optimized = false
+  hibernation = false
+  monitoring = false
+  
   root_block_device { volume_size = var.bastion_disk }
 
   security_groups = var.master_sg_ids

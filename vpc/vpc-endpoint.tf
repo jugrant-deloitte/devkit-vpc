@@ -60,9 +60,7 @@ resource "aws_security_group_rule" "private_ec2_ingress" {
   from_port   = 0
   to_port     = 0
   protocol    = "all"
-  cidr_blocks = [
-  "0.0.0.0/0"
-  ]
+  cidr_blocks = [var.deloitte_subnet_cidr_block, var.public_vpc_cidr_block, var.private_vpc_cidr_block]
 
   security_group_id =  aws_security_group.private_ec2_api.id
 }
@@ -121,9 +119,7 @@ resource "aws_security_group_rule" "private_elb_ingress" {
   from_port   = 0
   to_port     = 0
   protocol    = "all"
-  cidr_blocks = [
-  "0.0.0.0/0"
-  ]
+  cidr_blocks = [var.deloitte_subnet_cidr_block, var.public_vpc_cidr_block, var.private_vpc_cidr_block]
 
   security_group_id =  aws_security_group.private_elb_api.id
 }

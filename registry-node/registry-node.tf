@@ -27,8 +27,11 @@ resource "aws_instance" "registry-node" {
   instance_type = var.registry_type
   subnet_id = local.instance_subnet_id
   user_data = "{\"ignition\": {\"version\":\"3.1.0\"},\"passwd\":{\"users\":[{\"name\": \"core\",\"passwordHash\": \"\",\"sshAuthorizedKeys\":[\"${var.ssh_public_key}\"]}]}}"
-
-
+  disable_api_termination = false
+  ebs_optimized = false
+  hibernation = false
+  monitoring = false
+  
   root_block_device { volume_size = var.registry_volume }
   security_groups = var.registry_sg_ids
   associate_public_ip_address = true
